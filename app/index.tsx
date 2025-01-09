@@ -6,7 +6,13 @@ import { StatusBar } from "expo-status-bar";
 import { images } from "../constants";
 import CustomButton from "@/components/CustomButton";
 
+import { useGlobalContext } from "@/context/GlobalProvider";
+
 export default function Index() {
+  const { isLoading, isLoggedIn } = useGlobalContext();
+
+  if (!isLoading && isLoggedIn) return <Redirect href="/home" />;
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -43,7 +49,7 @@ export default function Index() {
           />
         </View>
       </ScrollView>
-      {/* hide or show time/ battery etc. design choice, werkt niet 100%*/}
+      {/* Hide or show time/ battery etc. design choice */}
       <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );

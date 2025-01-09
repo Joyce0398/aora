@@ -27,7 +27,7 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const submit = async () => {
     if (!form.username || !form.password || !form.email) {
@@ -39,8 +39,10 @@ const SignUp = () => {
     try {
       const result = await createUser(form.email, form.password, form.username);
       router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", "error message");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      Alert.alert("Error", errorMessage);
     } finally {
       setIsSubmitting(false);
     }
